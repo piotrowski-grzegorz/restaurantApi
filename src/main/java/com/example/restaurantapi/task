@@ -1,0 +1,39 @@
+Funkcjonalności:
+1. Zarządzanie restauracjami:
+o Rejestracja restauracji przez właścicieli.
+o Dodawanie informacji o restauracji, takich jak nazwa, adres, godziny
+otwarcia, zdjęcia.
+o Zarządzanie dostępnymi stolikami i ich układem w restauracji.
+
+2. Rezerwacja stolików:
+o Przeglądanie dostępnych restauracji z możliwością filtrowania po
+lokalizacji, typie kuchni, ocenach.
+o Wybór restauracji i przeglądanie dostępnych stolików wraz z planem
+układu restauracji.
+o Dokonywanie rezerwacji na wybrany termin i czas.
+o Anulowanie rezerwacji przez użytkownika.
+
+3. Zarządzanie rezerwacjami (dla właścicieli restauracji):
+o Przeglądanie wszystkich rezerwacji w swojej restauracji.
+o Potwierdzanie lub odrzucanie rezerwacji.
+o Zarządzanie stolikami i ich dostępnością.
+4. System ocen i recenzji:
+o Dodawanie ocen i recenzji przez użytkowników po wizycie w restauracji.
+o Przeglądanie ocen i recenzji restauracji.
+Wymagania techniczne:
+1. Spring Boot dla backendu.
+2. Spring Data JPA z bazą danych SQL (np. PostgreSQL) lub Spring Data
+MongoDB dla NoSQL.
+3. Spring Security dla autentykacji i autoryzacji użytkowników.
+4. JWT dla bezstanowej autentykacji.
+5. JUnit i Mockito dla testów jednostkowych i integracyjnych.
+6. Swagger lub SpringDoc OpenAPI dla dokumentacji API.
+Etapy realizacji:
+1. Projektowanie API: Określenie endpointów, metod HTTP i struktury danych.
+2. Implementacja backendu: Tworzenie modeli danych, repozytoriów, serwisów i
+kontrolerów.
+3. Zabezpieczenie aplikacji: Implementacja mechanizmów logowania i
+autentykacji.
+4. Testowanie: Pisanie testów jednostkowych i integracyjnych dla kluczowych
+funkcjonalności.
+5. Dokumentacja: Tworzenie dokumentacji API.

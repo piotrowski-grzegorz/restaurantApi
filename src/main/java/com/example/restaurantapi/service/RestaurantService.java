@@ -23,7 +23,8 @@ public class RestaurantService {
         newRestaurant.setType(req.getType());
         newRestaurant.setOpenHour(req.getOpenHour());
         newRestaurant.setCloseHour(req.getCloseHour());
-        return newRestaurant;
+        newRestaurant.setAddress(req.getAddress());
+        return restaurantRepository.save(newRestaurant);
     }
 //    public RestaurantModel createRestaurant(String name, String type, String openHour, String closeHour) {
 //        RestaurantModel newRestaurant = new RestaurantModel();

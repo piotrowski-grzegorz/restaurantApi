@@ -9,3 +9,4 @@ CREATE TABLE if not exists RESTAURANT
     foreign key (address_id) references ADDRESS (id)
 
 );
+

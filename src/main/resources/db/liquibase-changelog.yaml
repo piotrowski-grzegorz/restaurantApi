@@ -17,3 +17,41 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+  - changeSet:
+      id: 03_create_table_tables
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/03_create_table_tables.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 01_insert_into_address
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/01_insert_into_address.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 02_insert_into_restaurant
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/02_insert_into_restaurant.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 03_insert_into_tables
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/03_insert_into_tables.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+

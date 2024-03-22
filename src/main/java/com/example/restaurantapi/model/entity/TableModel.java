@@ -1,6 +1,6 @@
-package com.example.restaurantapi.model;
+package com.example.restaurantapi.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -19,17 +19,20 @@ public class TableModel {
    @Setter(AccessLevel.NONE)
    private Long id;
 
-   @Column(name = "AVAILABILITY")
-   private boolean isAvailable;
-
-   @Column(name = "ARRANGMENT")
+   @Column(name = "ARRANGEMENT")
    private String arrangment;
 
+   @Column(name = "VISIBLE_FOR_CLIENT")
+   private boolean isVisibleForClient;
+
    @ManyToOne(fetch = FetchType.EAGER)
-   @JoinColumn(name = "RESTAURANT_ID")
+   @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
    @JsonManagedReference
    private RestaurantModel restaurant;
 
+
+
+//   @Column(name = "ARRANGMENT_ENUM")
 //   @Enumerated(EnumType.ORDINAL)
 //   private TableArrangment tableArrangment;
 

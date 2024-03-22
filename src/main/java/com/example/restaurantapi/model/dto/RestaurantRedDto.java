@@ -1,4 +1,4 @@
-package com.example.restaurantapi.dto;
+package com.example.restaurantapi.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

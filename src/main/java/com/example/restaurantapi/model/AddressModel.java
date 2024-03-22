@@ -1,9 +1,13 @@
 package com.example.restaurantapi.model;
 
+import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,4 +31,13 @@ public class AddressModel {
     private String city;
     @Column(name = "COUNTRY", length = 128)
     private String country;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private RestaurantModel restaurantModel;
+
+
+
+
 }

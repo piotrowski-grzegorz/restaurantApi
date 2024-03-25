@@ -33,7 +33,7 @@ public class RestaurantModel {
     @Column(name = "AVG_MARK")
     private Integer averageMark;
 
-    private PhotoModel photos;
+//    private PhotoModel photos;
 
 //    @Column(name = "REVIEW_NUMBER")
 //    private Integer reviewNumber;

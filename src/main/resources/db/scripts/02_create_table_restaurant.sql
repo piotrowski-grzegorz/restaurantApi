@@ -17,6 +17,7 @@ CREATE TABLE if not exists RESTAURANT
     type VARCHAR(128) NOT NULL,
     OPEN_HOUR VARCHAR(6) not null,
     close_hour VARCHAR(6) NOT NULL ,
+    AVG_MARK BIGINT,
     address_id bigint,
 
     foreign key (address_id) references ADDRESS (id)

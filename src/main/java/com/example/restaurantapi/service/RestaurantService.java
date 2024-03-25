@@ -4,7 +4,7 @@ import com.example.restaurantapi.model.dto.NewRestaurantReq;
 import com.example.restaurantapi.model.dto.RestaurantReqDto;
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.example.restaurantapi.repository.RestaurantRepository;
-import com.example.restaurantapi.utils.exception.NoRestaurationFoundException;
+import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +26,9 @@ public class RestaurantService {
         return restaurantRepository.save(newRestaurant);
     }
 
-    public RestaurantModel updateRestaurant(Long id, RestaurantReqDto req) throws NoRestaurationFoundException {
+    public RestaurantModel updateRestaurant(Long id, RestaurantReqDto req) throws NoRestaurantFoundException {
         RestaurantModel restaurant = restaurantRepository.findById(id)
-                .orElseThrow( () -> new NoRestaurationFoundException("Not found nein"));
+                .orElseThrow( () -> new NoRestaurantFoundException("Not found nein"));
         restaurant.setName(req.getName());
         restaurant.setType(req.getType());
         restaurant.setOpenHour(req.getOpenHour());
@@ -36,27 +36,19 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public RestaurantModel findByName(String restaurantName) throws NoRestaurationFoundException {
+    public RestaurantModel findByName(String restaurantName) throws NoRestaurantFoundException {
         Optional<RestaurantModel> optRestaurant = restaurantRepository.findByNameIsIgnoreCase(restaurantName);
 
         if(optRestaurant.isPresent()) {
             RestaurantModel restuarant = optRestaurant.get();
             return restuarant;
         }
-        throw new NoRestaurationFoundException("Not found Restaurant , Hello from findByName");
+        throw new NoRestaurantFoundException("Not found Restaurant , Hello from findByName");
     }
 
     public void deleteRestaurantByName(Long id)
     {
         restaurantRepository.deleteById(id);
     }
-
-    public void findRestaurantByCity(){};
-    public void findRestaurantByCuisineType(){};
-    public void findRestaurantByMarks(){};
-    
-
-
-
 
 }

@@ -4,15 +4,12 @@ import com.example.restaurantapi.model.dto.NewRestaurantReq;
 import com.example.restaurantapi.model.dto.RestaurantReqDto;
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.example.restaurantapi.service.RestaurantService;
-import com.example.restaurantapi.utils.exception.NoRestaurationFoundException;
+import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
-
-import java.sql.Time;
-import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/restaurant")
@@ -28,13 +25,13 @@ public class RestaurantController {
     }
 
     @PutMapping ("/update/{id}")
-    ResponseEntity<RestaurantModel> updateRestaurantDataById(@PathVariable Long id, @RequestBody RestaurantReqDto req) throws NoRestaurationFoundException {
+    ResponseEntity<RestaurantModel> updateRestaurantDataById(@PathVariable Long id, @RequestBody RestaurantReqDto req) throws NoRestaurantFoundException {
         RestaurantModel restaurant = restaurantService.updateRestaurant(id, req);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @GetMapping("/findByName")
-    public ResponseEntity<RestaurantModel> findByName(@RequestParam String name) throws NoRestaurationFoundException {
+    public ResponseEntity<RestaurantModel> findByName(@RequestParam String name) throws NoRestaurantFoundException {
         RestaurantModel restaurantModel = restaurantService.findByName(name);
         return ResponseEntity.ok(restaurantModel);
     }

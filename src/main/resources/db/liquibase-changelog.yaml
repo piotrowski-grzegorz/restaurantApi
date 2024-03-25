@@ -26,15 +26,24 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
-#  - changeSet:
-#      id: 04_create_table_rating
-#      author: postgres
-#      changes:
-#        - sqlFile:
-#            path: scripts/04_create_table_rating.sql
-#            relativeToChangelogFile: true
-#            splitStatements: true
-#            stripComments: true
+  - changeSet:
+      id: 04_create_table_rating
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/04_create_table_rating.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 05_create_table_reservation
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/05_create_table_reservation.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
   - changeSet:
       id: 01_insert_into_address
       author: postgres
@@ -59,6 +68,15 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: scripts/03_insert_into_tables.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 04_insert_into_rating
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/04_insert_into_rating.sql
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true

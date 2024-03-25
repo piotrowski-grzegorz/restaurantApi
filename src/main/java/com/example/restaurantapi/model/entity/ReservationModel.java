@@ -1,11 +1,14 @@
 package com.example.restaurantapi.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Entity
+@Data
+@Table(name = "RESERVATION")
 public class ReservationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +21,6 @@ public class ReservationModel {
     private String guestPhoneNumber;
     @Column(name = "RESERVATION_DATE")
     private LocalDateTime reservationDate;
-
-    @Column(name = "PREBOOKED_BY_CLIENT")
-    private boolean isPrebookedByClient;
 
     @Column(name = "CONFIRMED_BY_HOST")
     private boolean isConfirmedByHost;

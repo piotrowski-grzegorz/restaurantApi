@@ -1,6 +1,5 @@
 package com.example.restaurantapi.model.dto;
 
-import com.example.restaurantapi.model.Address;
 import com.example.restaurantapi.model.AddressModel;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.OneToOne;

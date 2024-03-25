@@ -26,9 +26,14 @@ public class RestaurantModel {
     @Column(name = "CLOSE_HOUR", length = 6, nullable = false)
     private String closeHour;
 
-//    @Column(name = "RATING")
-//    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    private Set<RatingModel> rating;
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    private Set<RatingModel> rating;
+
+    @Column(name = "AVG_MARK")
+    private Integer averageMark;
+
+    private PhotoModel photos;
 
 //    @Column(name = "REVIEW_NUMBER")
 //    private Integer reviewNumber;
@@ -38,6 +43,7 @@ public class RestaurantModel {
     private AddressModel address;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
+
     private Set<TableModel> tables;
 
 

@@ -1,9 +1,13 @@
 package com.example.restaurantapi.controller;
 
+import com.example.restaurantapi.model.dto.ReservationReq;
+import com.example.restaurantapi.model.entity.ReservationModel;
 import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.example.restaurantapi.model.entity.TableModel;
 import com.example.restaurantapi.service.ReservationClientService;
-import com.example.restaurantapi.utils.exception.NoRestaurationFoundException;
+import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,33 +23,35 @@ public class ReservationClientController {
 
 
 
-    @GetMapping("/findByCity") // NIE DZIAŁA zwraca pustą listę
-    public ResponseEntity<List<RestaurantModel>> findAllRestaurantsByCity(@RequestParam String city) throws NoRestaurationFoundException {
+    @GetMapping("/findByCity")
+    public ResponseEntity<List<RestaurantModel>> findAllRestaurantsByCity(@RequestParam String city) throws NoRestaurantFoundException {
         List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByCity(city);
         return ResponseEntity.ok(restaurant);
     }
 
     @GetMapping("/findByType")
-    public ResponseEntity<RestaurantModel> findByType(@RequestParam String type) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<RestaurantModel>> findByType(@RequestParam String type) throws NoRestaurantFoundException {
+        List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByType(type);
+        return ResponseEntity.ok(restaurant);
     }
 
-    @GetMapping("/findByMarks")
-    public ResponseEntity<RestaurantModel> findByMarks(@RequestParam String mark) {
-        return ResponseEntity.ok().build();
+    @GetMapping("/findByMarks") // jeżeli za trudne można zostawić na sam koniec
+    public ResponseEntity<List<RestaurantModel>> findByMarks(@RequestParam Integer mark) {
+        List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByMark(mark);
+        return ResponseEntity.ok(restaurant);
     }
 
     @GetMapping("/getTablesByRestaurant")
-    public ResponseEntity<RestaurantModel> getTablesByRestaurant(@RequestParam String mark) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<TableModel>> getTablesByRestaurant(@RequestParam Long id) {
+        List<TableModel> tables = reservationClientService.getAllTablesByRestaurantId(id);
+        return ResponseEntity.ok(tables);
     }
 
     @PutMapping("/makeReservation")
-    public ResponseEntity<RestaurantModel> makeReservation(@RequestParam String restaurantName
-            , @RequestParam Long tableId
-            , @RequestParam ZonedDateTime date)
+    public ResponseEntity<ReservationReq> makeReservation(@RequestBody ReservationReq reservation)
     {
-        return ResponseEntity.ok().build();
+        reservationClientService.makeReservation(reservation);
+        return new ResponseEntity<>(reservation, HttpStatus.CREATED);
     }
 
     @PutMapping("/cancelReservation")

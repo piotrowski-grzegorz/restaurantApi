@@ -1,19 +1,33 @@
 package com.example.restaurantapi.repository;
 
+import com.example.restaurantapi.model.entity.RatingModel;
+import com.example.restaurantapi.model.entity.ReservationModel;
 import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.example.restaurantapi.model.entity.TableModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ReservationClientRepository extends JpaRepository<RestaurantModel, Long> {
+public interface ReservationClientRepository extends JpaRepository<ReservationModel, Long> {
 
-//    @Query(value = "SELECT c from RestaurantModel.address c where c.city = :city")
-    public List<RestaurantModel> findRestaurantModelByAddress_City(String city);
 
-    Optional<RestaurantModel> findByAddress_City(String name);
-    Optional<List<RestaurantModel>> findAllByAddress_City(String name);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

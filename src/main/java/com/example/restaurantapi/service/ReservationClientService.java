@@ -74,12 +74,20 @@ public class ReservationClientService {
         return list;
     }
 
-    public ReservationModel makeReservation(ReservationReq req){
+    public ReservationModel makeReservation(Long id, ReservationReq req){
+        Optional<RestaurantModel> restaurant = restaurantRepository.findById(id);
         ReservationModel newReservation = new ReservationModel();
         newReservation.setGuestName(req.getGuestName());
         newReservation.setGuestSurname(req.getGuestSurname());
         newReservation.setGuestPhoneNumber(req.getGuestPhoneNumber());
+        newReservation.setComments(req.getComments());
+        newReservation.setRestaurantModel(restaurant.get());
         return reservationClientRepository.save(newReservation);
+    }
+
+    public void cancelReservation(Long id) {
+        reservationClientRepository.deleteById(id);
+
     }
 
 

@@ -47,17 +47,18 @@ public class ReservationClientController {
         return ResponseEntity.ok(tables);
     }
 
-    @PutMapping("/makeReservation")
-    public ResponseEntity<ReservationReq> makeReservation(@RequestBody ReservationReq reservation)
+    @PutMapping("/makeReservation/{id}")
+    public ResponseEntity<ReservationReq> makeReservation(@PathVariable Long id, @RequestBody ReservationReq reservation)
     {
-        reservationClientService.makeReservation(reservation);
+        reservationClientService.makeReservation(id, reservation);
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
     }
 
-    @PutMapping("/cancelReservation")
-    public ResponseEntity<RestaurantModel> cancelReservation(@RequestParam String restaurantName
-            , @RequestParam Long tableId)
+    @DeleteMapping("/cancelReservation/{id}")
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long id)
     {
+        reservationClientService.cancelReservation(id);
+
         return ResponseEntity.ok().build();
     }
 

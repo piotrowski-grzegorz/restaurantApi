@@ -1,5 +1,6 @@
 package com.example.restaurantapi.model.dto;
 
+import com.example.restaurantapi.model.entity.RestaurantModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,5 +24,7 @@ public class ReservationReq {
     private boolean isRejectedByHost;
 
     private String comments;
+
+    private Long restaurantModelId;
 
 }

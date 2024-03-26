@@ -1,9 +1,11 @@
 package com.example.restaurantapi.model.entity;
 
 import com.example.restaurantapi.model.AddressModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -46,6 +48,10 @@ public class RestaurantModel {
 
     private Set<TableModel> tables;
 
+    @OneToMany(mappedBy = "restaurantModel", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonBackReference
+//    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
+    private List<ReservationModel> reservationModel;
 
 
 

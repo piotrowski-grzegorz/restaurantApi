@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS address
     restaurant_id bigint
 
 );
+
+
 CREATE TABLE if not exists RESTAURANT
 (
     id BIGINT auto_increment primary key ,
@@ -19,10 +21,14 @@ CREATE TABLE if not exists RESTAURANT
     close_hour VARCHAR(6) NOT NULL ,
     AVG_MARK BIGINT,
     address_id bigint,
+    reservation_id bigint,
 
     foreign key (address_id) references ADDRESS (id)
 
+
 );
 
+
 ALTER TABLE address ADD CONSTRAINT address FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT(ID);
+
 

@@ -41,7 +41,7 @@ public class ReservationModel {
     private String comments;
 
     @ManyToOne
-    @JoinColumn(name = "RESTAURANT_ID")
+    @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
     @JsonManagedReference
     private RestaurantModel restaurantModel;
 

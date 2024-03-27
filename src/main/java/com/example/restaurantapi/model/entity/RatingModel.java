@@ -25,7 +25,7 @@ public class RatingModel {
     @Column(name = "REVIEW")
     private String review;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     @JsonManagedReference
     private RestaurantModel restaurant;

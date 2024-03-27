@@ -1,6 +1,7 @@
 package com.example.restaurantapi.model.entity;
 
 import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +11,6 @@ import lombok.Setter;
 
 @Entity
 @Data
-@RequiredArgsConstructor
 @Table(name = "TABLES")
 public class TableModel {
 
@@ -25,9 +25,8 @@ public class TableModel {
    @Column(name = "VISIBLE_FOR_CLIENT")
    private boolean isVisibleForClient;
 
-   @ManyToOne(fetch = FetchType.EAGER)
+   @ManyToOne
    @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
-   @JsonManagedReference
    private RestaurantModel restaurant;
 
 

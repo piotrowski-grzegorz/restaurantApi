@@ -1,6 +1,7 @@
 package com.example.restaurantapi.model;
 
 import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,10 +10,10 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Entity
 @Data
 @Table(name = "ADDRESS")
-
+//@Embeddable
+@Entity
 public class AddressModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +33,9 @@ public class AddressModel {
     @Column(name = "COUNTRY", length = 128)
     private String country;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "ID")
+    @JsonBackReference
     private RestaurantModel restaurantModel;
 
 

@@ -18,28 +18,77 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
+    /**
+     * Creates a new restaurant based on provided data.
+     *
+     * @param request Data required to create the restaurant
+     * @return The created restaurant with HTTP status 201
+     *
+     */
     @PostMapping
     public ResponseEntity<RestaurantModel> createRestaurant(@Valid @RequestBody NewRestaurantReq request) {
         RestaurantModel restaurant = restaurantService.createRestaurant(request);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
+    /**
+     * Updates an existing restaurant with a new data
+     *
+     * @param id The ID of the restaurant to update
+     * @param req Data required for updating the restaurant
+     * @return The update restaurant with HTTP status 200
+     * @throws NoRestaurantFoundException if no restaurant is found with the provided id
+     *
+     */
+
     @PutMapping ("/update/{id}")
     ResponseEntity<RestaurantModel> updateRestaurantDataById(@PathVariable Long id, @RequestBody RestaurantReqDto req) throws NoRestaurantFoundException {
         RestaurantModel restaurant = restaurantService.updateRestaurant(id, req);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        return ResponseEntity.ok(restaurant);
     }
 
+    /**
+     * Retrives a restaurant by it's name
+     *
+     * @param name the name of the restaurant to retrieve
+     * @return the request restaurant if found, with HTTP status 200
+     * @throws NoRestaurantFoundException if no restaurant is found with the provided name
+     *
+     */
     @GetMapping("/findByName")
     public ResponseEntity<RestaurantModel> findByName(@RequestParam String name) throws NoRestaurantFoundException {
         RestaurantModel restaurantModel = restaurantService.findByName(name);
         return ResponseEntity.ok(restaurantModel);
     }
 
+    /**
+     * Retrives a restaurant by its id
+     *
+     * @param id The id of the restaurant to retrieve
+     * @return the request restaurant if found, with HTTP status 200
+     * @throws NoRestaurantFoundException if no restaurant is found with the provided id
+     *
+     */
+
+    @GetMapping("/findByAddressId/{id}")
+    public ResponseEntity<RestaurantModel> findByAddressId(@PathVariable Long id) throws NoRestaurantFoundException {
+        RestaurantModel restaurantModel = restaurantService.findByAdressId(id);
+        return ResponseEntity.ok(restaurantModel);
+    }
+
+    /**
+     *
+     * Delete a restaurant by its ID
+     *
+     * @param id The id of the configuration to delete
+     * @return HTTP status 202 with accepted if the deletion was successful
+     * @throws NoRestaurantFoundException if no restaurant is found with the provided id
+     *
+     */
     @DeleteMapping("/deleteById/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        restaurantService.deleteRestaurantByName(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) throws NoRestaurantFoundException {
+        restaurantService.deleteRestaurantById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
 }

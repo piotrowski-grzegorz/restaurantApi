@@ -36,20 +36,13 @@ public class ReservationClientService {
     public List<RestaurantModel> findAllRestaurantsByType(String type) throws NoRestaurantFoundException {
         RestaurantModel restaurantModel = new RestaurantModel();
 
-
         List<RestaurantModel> optRestaurant = restaurantRepository
                 .findAllByTypeIgnoreCase(type);
-//        optRestaurant.orElseThrow(() -> new NoRestaurationFoundException("NOT FOUND"));
-//        if (optRestaurant.isPresent()) {
-//            List<RestaurantModel> restaurantModel = optRestaurant.get();
-//            return restaurantModel;
-//        }
-//        List<RestaurantModel> restaurantModel = optRestaurant.get();
         if (optRestaurant.isEmpty()) {
             new NoRestaurantFoundException("NO SUCH TYPE HAVE BEEN FOUND");
         }
         return optRestaurant;
-//        throw new NoRestaurationFoundException("No such type found " + type);
+
     }
 
     /*
@@ -59,9 +52,7 @@ public class ReservationClientService {
     public List<RestaurantModel> findAllRestaurantsByMark(Integer mark) {
         RestaurantModel restaurantModel = new RestaurantModel();
         return restaurantRepository.findAllByRating_Mark(mark);
-//        List<RestaurantModel> l =
-//        l.stream().filter(x -> x.getRating().)
-//        return
+
     }
 
     public List<TableModel> getAllTablesByRestaurantId(Long id) {
@@ -89,15 +80,4 @@ public class ReservationClientService {
         reservationClientRepository.deleteById(id);
 
     }
-
-
-
-
 }
-
-//    public Integer getAvgMark(String city) {
-//
-//        Optional<List<RestaurantModel>> r = reservationClientRepository.findAllByAddress_City(city);
-//        r.filter(x -> x.)
-//    }
-//}

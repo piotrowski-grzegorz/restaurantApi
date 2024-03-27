@@ -1,13 +1,13 @@
 databaseChangeLog:
-#  - changeSet:
-#      id: 01_create_table_address
-#      author: postgres
-#      changes:
-#        - sqlFile:
-#            path: scripts/01_create_table_address.sql
-#            relativeToChangelogFile: true
-#            splitStatements: true
-#            stripComments: true
+##  - changeSet:
+##      id: 01_create_table_address
+##      author: postgres
+##      changes:
+##        - sqlFile:
+##            path: scripts/01_create_table_address.sql
+##            relativeToChangelogFile: true
+##            splitStatements: true
+##            stripComments: true
   - changeSet:
       id: 02_create_table_restaurant
       author: postgres
@@ -17,15 +17,15 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
-  - changeSet:
-      id: 03_create_table_tables
-      author: postgres
-      changes:
-        - sqlFile:
-            path: scripts/03_create_table_tables.sql
-            relativeToChangelogFile: true
-            splitStatements: true
-            stripComments: true
+#  - changeSet:
+#      id: 03_create_table_tables
+#      author: postgres
+#      changes:
+#        - sqlFile:
+#            path: scripts/03_create_table_tables.sql
+#            relativeToChangelogFile: true
+#            splitStatements: true
+#            stripComments: true
   - changeSet:
       id: 04_create_table_rating
       author: postgres
@@ -71,16 +71,16 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
-  - changeSet:
-      id: 04_insert_into_rating
-      author: postgres
-      changes:
-        - sqlFile:
-            path: scripts/04_insert_into_rating.sql
-            relativeToChangelogFile: true
-            splitStatements: true
-            stripComments: true
-
-
-
-
+##  - changeSet:
+##      id: 04_insert_into_rating
+##      author: postgres
+##      changes:
+##        - sqlFile:
+##            path: scripts/04_insert_into_rating.sql
+##            relativeToChangelogFile: true
+##            splitStatements: true
+##            stripComments: true
+#
+#
+#
+#

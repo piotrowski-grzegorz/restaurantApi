@@ -2,6 +2,7 @@ package com.example.restaurantapi.model.entity;
 
 import com.example.restaurantapi.model.AddressModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,9 +11,6 @@ import java.util.Set;
 
 @Data
 @Entity
-//@NoArgsConstructor
-//@Getter
-//@Setter
 @Table(name = "RESTAURANT")
 public class RestaurantModel {
     @Id
@@ -28,8 +26,7 @@ public class RestaurantModel {
     @Column(name = "CLOSE_HOUR", length = 6, nullable = false)
     private String closeHour;
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<RatingModel> rating;
 
     @Column(name = "AVG_MARK")
@@ -40,17 +37,16 @@ public class RestaurantModel {
 //    @Column(name = "REVIEW_NUMBER")
 //    private Integer reviewNumber;
 
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private AddressModel address;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
-
-    private Set<TableModel> tables;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<TableModel> tables;
 
     @OneToMany(mappedBy = "restaurantModel", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonBackReference
-//    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
+    @JsonManagedReference
     private List<ReservationModel> reservationModel;
 
 

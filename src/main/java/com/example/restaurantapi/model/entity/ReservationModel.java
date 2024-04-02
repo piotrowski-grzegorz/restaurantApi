@@ -1,5 +1,6 @@
 package com.example.restaurantapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -29,7 +31,7 @@ public class ReservationModel {
     private String guestPhoneNumber;
 
     @Column(name = "RESERVATION_DATE")
-    private LocalDateTime reservationDate;
+    private LocalDateTime date;
 
     @Column(name = "CONFIRMED_BY_HOST")
     private boolean isConfirmedByHost;
@@ -42,7 +44,7 @@ public class ReservationModel {
 
     @ManyToOne
     @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
-    @JsonManagedReference
+    @JsonBackReference
     private RestaurantModel restaurantModel;
 
 

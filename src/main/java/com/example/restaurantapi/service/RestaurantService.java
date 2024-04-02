@@ -64,12 +64,14 @@ public class RestaurantService {
      * @throws NoRestaurantFoundException
      */
     public RestaurantModel findByName(String restaurantName) throws NoRestaurantFoundException {
-        Optional<RestaurantModel> optRestaurant = restaurantRepository.findByNameIsIgnoreCase(restaurantName);
+        Optional<RestaurantModel> optRestaurant = Optional.ofNullable(restaurantRepository.findByNameIsIgnoreCase(restaurantName)
+                .orElseThrow(() -> new NoRestaurantFoundException("Invalid Restaurant_name: Can't find restaurant's data because there is no restaurant with such a name")));
 
-        if(optRestaurant.isPresent()) {
-            return optRestaurant.get();
-        }
-        throw new NoRestaurantFoundException("Can't find restaurant's data because there is no restaurant with such an ID");
+//        if(optRestaurant.isPresent()) {
+//
+//        }
+//        throw new NoRestaurantFoundException("Can't find restaurant's data because there is no restaurant with such an ID");
+        return optRestaurant.get();
     }
 
     /**
@@ -81,12 +83,12 @@ public class RestaurantService {
      * @throws NoRestaurantFoundException If no restaurant is found with the provided id
      */
 
-    public RestaurantModel findByAdressId(Long id) throws NoRestaurantFoundException {
-        Optional<RestaurantModel> optRestaurant = restaurantRepository.findByAddress_Id(id);
+    public RestaurantModel findById(Long id) throws NoRestaurantFoundException {
+        Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(id);
         if( optRestaurant.isPresent()) {
             return optRestaurant.get();
         }
-        throw new NoRestaurantFoundException("Can't find restaurant's address because there is no address with such an ID");
+        throw new NoRestaurantFoundException("Invalid Restaurant_ID: Can't find restaurant's address because there is no address with such an ID");
     }
 
     /**

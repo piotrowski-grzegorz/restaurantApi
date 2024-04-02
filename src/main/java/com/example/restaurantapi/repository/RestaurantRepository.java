@@ -3,6 +3,7 @@ package com.example.restaurantapi.repository;
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,22 +17,13 @@ public interface RestaurantRepository extends JpaRepository<RestaurantModel, Lon
      * @param name City name of address
      * @return An optional containing the found restaurant or empty of no restaurant found
      */
-    Optional<List<RestaurantModel>> findAllByAddress_City(String name);
-
-    /**
-     *
-     * Finds a restaurant by address id
-     *
-     * @param id The unique identifier of address
-     * @return An optional containing the found restaurant or empty of no restaurant found
-     */
-    Optional<RestaurantModel> findByAddress_Id(Long id);
+    List<RestaurantModel> findAllByAddressIgnoreCase_City(String name);
 
     /**
      *
      * Finds all restaurants by cuisine's type
      *
-     * @param type The cusine type of the restaurant
+     * @param type The cuisine type of the restaurant
      * @return List containing generic type of the found restaurant or empty list with no restaurants found
      */
     List<RestaurantModel> findAllByTypeIgnoreCase(String type);

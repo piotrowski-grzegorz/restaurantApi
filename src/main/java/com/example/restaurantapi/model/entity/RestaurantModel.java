@@ -26,8 +26,9 @@ public class RestaurantModel {
     @Column(name = "CLOSE_HOUR", length = 6, nullable = false)
     private String closeHour;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Set<RatingModel> rating;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<RatingModel> rating;
 
     @Column(name = "AVG_MARK")
     private Integer averageMark;

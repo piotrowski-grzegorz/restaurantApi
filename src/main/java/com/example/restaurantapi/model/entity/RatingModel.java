@@ -1,8 +1,10 @@
 package com.example.restaurantapi.model.entity;
 
 import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -15,7 +17,6 @@ public class RatingModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
-
     @Column(name = "NAME")
     private String name;
     @Column(name = "SURNAME")
@@ -26,8 +27,8 @@ public class RatingModel {
     private String review;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    @JsonManagedReference
+    @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
+    @JsonBackReference
     private RestaurantModel restaurant;
 
 

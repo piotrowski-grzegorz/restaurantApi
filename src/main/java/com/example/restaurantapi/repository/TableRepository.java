@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface TableRepository extends JpaRepository<TableModel, Long> {
@@ -14,6 +15,10 @@ public interface TableRepository extends JpaRepository<TableModel, Long> {
     @Modifying
     @Query("UPDATE TableModel e SET e.isVisibleForClient = :isVisible where e.id = :id")
     void updateTableVisibilityById(Long id, boolean isVisible);
+
+    Optional<TableModel> findTopByRestaurant_Id(Long id);
+
+
 
 
 

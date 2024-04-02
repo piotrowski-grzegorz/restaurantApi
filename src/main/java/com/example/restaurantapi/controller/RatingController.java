@@ -1,33 +1,35 @@
 package com.example.restaurantapi.controller;
 
+import com.example.restaurantapi.model.dto.NewMarkReq;
+import com.example.restaurantapi.model.entity.RatingModel;
 import com.example.restaurantapi.model.entity.RestaurantModel;
+import com.example.restaurantapi.service.RatingService;
+import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rating")
 @RequiredArgsConstructor
 public class RatingController {
 
-    @PostMapping("/addMark/{id}")
-    public ResponseEntity<Void> addMark(@PathVariable Long id, @RequestParam Integer mark) {
-        return ResponseEntity.ok().build();
+    private final RatingService ratingService;
+
+    @PostMapping("{id}")
+    public ResponseEntity<RatingModel> addRating(@PathVariable Long id, @Valid @RequestBody NewMarkReq req) throws NoRestaurantFoundException {
+        RatingModel newRating = ratingService.addMark(id, req);
+        return new ResponseEntity<>(newRating,HttpStatus.CREATED);
     }
 
-    @PostMapping("/addReview/{id}")
-    public ResponseEntity<Void> addReview(@PathVariable Long id, @RequestParam String review) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/marks/{id}")
-    public ResponseEntity<Void> gettAllMarks(@PathVariable Long id, @RequestParam String marks) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/reviews/{id}")
-    public ResponseEntity<Void> getAllReviews(@PathVariable Long id, @RequestParam String review) {
-        return ResponseEntity.ok().build();
+    @GetMapping("get/{id}")
+    public ResponseEntity<List<RatingModel>> getAllRatings(@PathVariable Long id) {
+        List<RatingModel> getAllRating = ratingService.findAllRatingByRestaurantId(id);
+        return ResponseEntity.ok(getAllRating);
     }
 
 

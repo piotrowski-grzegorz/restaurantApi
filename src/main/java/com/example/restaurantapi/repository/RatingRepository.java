@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<RatingModel, Long> {
 
-    List<RatingModel> findAllByRestaurantId(Long id);
+    List<RatingModel> findAllByRestaurant_Id(Long id);
+
+
 
 }

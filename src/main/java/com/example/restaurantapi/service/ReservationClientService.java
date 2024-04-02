@@ -7,11 +7,13 @@ import com.example.restaurantapi.model.entity.TableModel;
 import com.example.restaurantapi.repository.ReservationClientRepository;
 import com.example.restaurantapi.repository.RestaurantRepository;
 import com.example.restaurantapi.repository.TableRepository;
+import com.example.restaurantapi.utils.exception.NoReservationFoundException;
 import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
-import jakarta.persistence.Table;
+import com.example.restaurantapi.utils.exception.NoTableFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,24 +26,24 @@ public class ReservationClientService {
     private final RestaurantRepository restaurantRepository;
 
     public List<RestaurantModel> findAllRestaurantsByCity(String name) throws NoRestaurantFoundException {
-        Optional<List<RestaurantModel>> optRestaurant = restaurantRepository.findAllByAddress_City(name);
-        if (optRestaurant.isPresent()) {
-            List<RestaurantModel> restaurantModel = optRestaurant.get();
-            return restaurantModel;
+        List<RestaurantModel> restaurant = restaurantRepository.findAllByAddressIgnoreCase_City(name);
+
+        if (restaurant.isEmpty()) {
+            throw new NoRestaurantFoundException("No restaurants found in the city of " + name);
         }
-        throw new NoRestaurantFoundException("Not found Restaurant from City " + name);
+        return restaurant;
+
 
     }
 
-    public List<RestaurantModel> findAllRestaurantsByType(String type) throws NoRestaurantFoundException {
-        RestaurantModel restaurantModel = new RestaurantModel();
 
-        List<RestaurantModel> optRestaurant = restaurantRepository
-                .findAllByTypeIgnoreCase(type);
-        if (optRestaurant.isEmpty()) {
-            new NoRestaurantFoundException("NO SUCH TYPE HAVE BEEN FOUND");
+    public List<RestaurantModel> findAllRestaurantsByType(String type) throws NoRestaurantFoundException {
+        List<RestaurantModel> restaurant = restaurantRepository.findAllByTypeIgnoreCase(type);
+        if (restaurant.isEmpty()) {
+            throw new NoRestaurantFoundException("Restaurant specializing in " + type +
+                    " cuisine not found.");
         }
-        return optRestaurant;
+        return restaurant;
 
     }
 
@@ -55,9 +57,14 @@ public class ReservationClientService {
 
     }
 
-    public List<TableModel> getAllTablesByRestaurantId(Long id) {
-        List<TableModel> list = tableRepository.findAllByRestaurant_Id(id);
-        return isVisibleForClient(list);
+    public List<TableModel> getAllTablesByRestaurantId(Long id) throws NoTableFoundException {
+
+        List<TableModel> tablesVisibleForHost = tableRepository.findAllByRestaurant_Id(id);
+        List<TableModel> tablesVisibleForClient = isVisibleForClient(tablesVisibleForHost);
+        if(tablesVisibleForClient.isEmpty()) {
+            throw new NoTableFoundException("No tables available.");
+        }
+        return tablesVisibleForClient;
     }
 
     private List<TableModel> isVisibleForClient(List<TableModel> list) {
@@ -65,7 +72,7 @@ public class ReservationClientService {
         return list;
     }
 
-    public ReservationModel makeReservation(Long id, ReservationReq req){
+    public void makeReservation(Long id, ReservationReq req){
         Optional<RestaurantModel> restaurant = restaurantRepository.findById(id);
         ReservationModel newReservation = new ReservationModel();
         newReservation.setGuestName(req.getGuestName());
@@ -73,10 +80,18 @@ public class ReservationClientService {
         newReservation.setGuestPhoneNumber(req.getGuestPhoneNumber());
         newReservation.setComments(req.getComments());
         newReservation.setRestaurantModel(restaurant.get());
-        return reservationClientRepository.save(newReservation);
+        newReservation.setDate(req.getDate());
+        reservationClientRepository.save(newReservation);
     }
 
-    public void cancelReservation(Long id) {
+    public void cancelReservation(Long id) throws NoRestaurantFoundException, NoReservationFoundException {
+        Optional<ReservationModel> reservation = Optional
+                .ofNullable(reservationClientRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new NoReservationFoundException
+                                ("Invalid Reservation_ID: Can't find reservation with such an ID")
+                ));
         reservationClientRepository.deleteById(id);
 
     }

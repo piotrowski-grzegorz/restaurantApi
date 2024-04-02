@@ -27,6 +27,7 @@ public class TableModel {
 
    @ManyToOne
    @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
+   @JsonBackReference
    private RestaurantModel restaurant;
 
 

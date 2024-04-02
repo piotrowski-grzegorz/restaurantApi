@@ -42,7 +42,7 @@ public class RestaurantController {
      */
 
     @PutMapping ("/update/{id}")
-    ResponseEntity<RestaurantModel> updateRestaurantDataById(@PathVariable Long id, @RequestBody RestaurantReqDto req) throws NoRestaurantFoundException {
+    ResponseEntity<RestaurantModel> updateRestaurantDataById(@PathVariable Long id, @Valid @RequestBody RestaurantReqDto req) throws NoRestaurantFoundException {
         RestaurantModel restaurant = restaurantService.updateRestaurant(id, req);
         return ResponseEntity.ok(restaurant);
     }
@@ -70,9 +70,9 @@ public class RestaurantController {
      *
      */
 
-    @GetMapping("/findByAddressId/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<RestaurantModel> findByAddressId(@PathVariable Long id) throws NoRestaurantFoundException {
-        RestaurantModel restaurantModel = restaurantService.findByAdressId(id);
+        RestaurantModel restaurantModel = restaurantService.findById(id);
         return ResponseEntity.ok(restaurantModel);
     }
 

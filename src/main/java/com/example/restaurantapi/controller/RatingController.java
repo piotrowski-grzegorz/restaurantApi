@@ -20,7 +20,7 @@ public class RatingController {
 
     private final RatingService ratingService;
 
-    @PostMapping("{id}")
+    @PostMapping("/add/{id}")
     public ResponseEntity<RatingModel> addRating(@PathVariable Long id, @Valid @RequestBody NewMarkReq req) throws NoRestaurantFoundException {
         RatingModel newRating = ratingService.addMark(id, req);
         return new ResponseEntity<>(newRating,HttpStatus.CREATED);

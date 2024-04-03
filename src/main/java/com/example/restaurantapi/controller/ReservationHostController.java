@@ -25,26 +25,21 @@ public class ReservationHostController {
 
     private final ReservationHostService reservationHostService;
 
-    @GetMapping("/getAllReservation/{id}")
-    public ResponseEntity<List<ReservationModel>> getAllReservationInRestaurantById(@PathVariable Long id) throws NoReservationFoundException, NoRestaurantFoundException {
+    @GetMapping("/getAllReservationsByRestaurant/{id}")
+    public ResponseEntity<List<ReservationModel>> getAllReservationInRestaurantById(@PathVariable Long id)
+            throws NoReservationFoundException, NoRestaurantFoundException {
         List<ReservationModel> allReservations = reservationHostService.getAllReservationsByRestaurantId(id);
         return ResponseEntity.ok(allReservations);
     }
 
-//    @PutMapping("/confirmReservation/{id}")
-//    public ResponseEntity<Void> confirmReservation(@RequestParam String tel,
-//                                                   @RequestParam boolean isConfirmed,
-//                                                   @PathVariable Long id) throws NoReservationFoundException, NoRestaurantFoundException {
-//        reservationHostService.confirmReservation(tel, isConfirmed, id);
-//        return ResponseEntity.ok().build();
-//    }
 @PutMapping("/confirmReservation/")
-public ResponseEntity<Void> confirmReservation(@RequestBody ReservationStatusReq req, @RequestParam boolean status) throws NoReservationFoundException, NoRestaurantFoundException {
+public ResponseEntity<Void> confirmReservation(@RequestBody ReservationStatusReq req, @RequestParam boolean status)
+        throws NoReservationFoundException, NoRestaurantFoundException {
     reservationHostService.confirmReservation(req, status);
     return ResponseEntity.ok().build();
 }
 
-    @PutMapping("/rejectReservation/{id}")
+    @PutMapping("/rejectReservation/")
     public ResponseEntity<Void> rejectReservation(@RequestBody ReservationStatusReq req, @RequestParam boolean status) throws NoReservationFoundException, NoRestaurantFoundException {
         reservationHostService.rejectReservation(req, status);
         return ResponseEntity.ok().build();

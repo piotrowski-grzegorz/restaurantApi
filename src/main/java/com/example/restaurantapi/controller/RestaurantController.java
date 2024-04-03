@@ -25,7 +25,7 @@ public class RestaurantController {
      * @return The created restaurant with HTTP status 201
      *
      */
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<RestaurantModel> createRestaurant(@Valid @RequestBody NewRestaurantReq request) {
         RestaurantModel restaurant = restaurantService.createRestaurant(request);
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
@@ -71,7 +71,7 @@ public class RestaurantController {
      */
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<RestaurantModel> findByAddressId(@PathVariable Long id) throws NoRestaurantFoundException {
+    public ResponseEntity<RestaurantModel> findById(@PathVariable Long id) throws NoRestaurantFoundException {
         RestaurantModel restaurantModel = restaurantService.findById(id);
         return ResponseEntity.ok(restaurantModel);
     }

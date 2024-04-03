@@ -25,19 +25,19 @@ public class ReservationClientController {
 
 
 
-    @GetMapping("/findByCity")
+    @GetMapping("/findRestaurantByCity")
     public ResponseEntity<List<RestaurantModel>> findAllRestaurantsByCity(@RequestParam String city) throws NoRestaurantFoundException {
         List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByCity(city);
         return ResponseEntity.ok(restaurant);
     }
 
-    @GetMapping("/findByType")
+    @GetMapping("/findRestaurantByType")
     public ResponseEntity<List<RestaurantModel>> findByType(@RequestParam String type) throws NoRestaurantFoundException {
         List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByType(type);
         return ResponseEntity.ok(restaurant);
     }
 
-    @GetMapping("/findByMarks") // jeżeli za trudne można zostawić na sam koniec
+    @GetMapping("/findRestaurantByMarks") // jeżeli za trudne można zostawić na sam koniec
     public ResponseEntity<List<RestaurantModel>> findByMarks(@RequestParam Integer mark) {
         List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByMark(mark);
         return ResponseEntity.ok(restaurant);

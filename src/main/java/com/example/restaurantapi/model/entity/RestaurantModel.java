@@ -31,7 +31,7 @@ public class RestaurantModel {
     private List<RatingModel> rating;
 
     @Column(name = "AVG_MARK")
-    private Integer averageMark;
+    private Double averageMark;
 
 //    private PhotoModel photos;
 

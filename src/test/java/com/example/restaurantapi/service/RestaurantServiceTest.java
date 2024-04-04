@@ -16,22 +16,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class RestaurantServiceTest {
-    private RestaurantService restaurantService;
     private RestaurantRepository restaurantRepository;
-
+    private RestaurantService restaurantService;
     @BeforeEach
     void setUp() {
         restaurantRepository = Mockito.mock(RestaurantRepository.class);
-        RestaurantService restaurantService = new RestaurantService(restaurantRepository);
-        restaurantRepository = new InMemoryRestaurantRepository();
-        RestaurantModel restaurantModel = new RestaurantModel();
+//        restaurantService = Mockito.mock(RestaurantService.class);
+//        restaurantRepository = new InMemoryRestaurantRepository();
+        restaurantService = new RestaurantService(restaurantRepository);
 
     }
 
 
     @Test
     void createRestaurant() {
-        //given
+//        //given
 //        NewRestaurantReq newRestaurant = new NewRestaurantReq();
 //        AddressModel newAddress = new AddressModel();
 //        newAddress.setStreetName("Sienkiewicza");
@@ -45,8 +44,9 @@ class RestaurantServiceTest {
 //        newRestaurant.setOpenHour("9:00");
 //        newRestaurant.setCloseHour("19:00");
 //        newRestaurant.setAddress(newAddress);
+//        when(restaurantRepository.)
 //        //when
-//        NewRestaurantReq createdRestaurant = restaurantService.createRestaurant(newRestaurant);
+//        RestaurantModel createdRestaurant = restaurantService.createRestaurant(newRestaurant);
 //        //then
 //        assertEquals(newRestaurant, createdRestaurant);
     }
@@ -63,13 +63,13 @@ class RestaurantServiceTest {
         String restaurantName = "DA LUCA";
         var restaurant = new RestaurantModel();
         restaurant.setName(restaurantName);
-        restaurant.setAddress(new AddressModel("Mickiewicza",
-                "2",
+        restaurant.setAddress(new AddressModel(
+                "Wołoska",
                 "3",
-                "41-000",
-                "Warszawa",
-                "Polska"));
-        when(restaurantRepository.findByNameIsIgnoreCase(restaurantName))
+                "5",
+                "00-001",
+                "Warszawa", "Polska"));
+        when(restaurantRepository.findByNameIsIgnoreCase(Mockito.anyString()))
                 .thenReturn(Optional.of(restaurant));
 
         //when
@@ -77,6 +77,7 @@ class RestaurantServiceTest {
         RestaurantModel restaurantModelByName = restaurantService.findByName(restaurantName);
         //then
         assertEquals(restaurantName, restaurantModelByName.getName());
+        assertEquals("Polska", restaurantModelByName.getAddress().getCountry());
     }
 
     @Test

@@ -1,9 +1,11 @@
 package com.example.restaurantapi.service;
 
 import com.example.restaurantapi.model.dto.ReservationReq;
+import com.example.restaurantapi.model.entity.RatingModel;
 import com.example.restaurantapi.model.entity.ReservationModel;
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.example.restaurantapi.model.entity.TableModel;
+import com.example.restaurantapi.repository.RatingRepository;
 import com.example.restaurantapi.repository.ReservationClientRepository;
 import com.example.restaurantapi.repository.RestaurantRepository;
 import com.example.restaurantapi.repository.TableRepository;
@@ -24,6 +26,7 @@ public class ReservationClientService {
     private final ReservationClientRepository reservationClientRepository;
     private final TableRepository tableRepository;
     private final RestaurantRepository restaurantRepository;
+    private final RatingRepository ratingRepository;
 
     public List<RestaurantModel> findAllRestaurantsByCity(String name) throws NoRestaurantFoundException {
         List<RestaurantModel> restaurant = restaurantRepository.findAllByAddressIgnoreCase_City(name);
@@ -93,6 +96,19 @@ public class ReservationClientService {
                                 ("Invalid Reservation_ID: Can't find reservation with such an ID")
                 ));
         reservationClientRepository.deleteById(id);
+
+    }
+
+    private Double calculateAverageMark(Long restaurantId) throws NoRestaurantFoundException {
+        List<RatingModel> ratings = ratingRepository.findAllByRestaurant_Id(restaurantId);
+        if(ratings.isEmpty()) {
+            return null;
+        }
+
+        return ratings.stream()
+                .mapToInt(RatingModel::getMark)
+                .average()
+                .orElse(Double.NaN);
 
     }
 }

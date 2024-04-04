@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.springdoc.api.ErrorMessage;
 import org.springframework.cglib.core.Local;
 
 import java.text.SimpleDateFormat;
@@ -30,19 +31,12 @@ public class ReservationReq {
     @Pattern(regexp = "\\d{9}", message = "Invalid PhoneNumber: Invalid format for phone number. Should be e.g 666555444")
     private String guestPhoneNumber;
 //    @Pattern(regexp = "yyyy-MM-dd'T'HH:mm:ss", message = "Invalid Date: Invalid date format should be yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @FutureOrPresent(message = "Future or start date")
+    @NotNull
     private LocalDateTime date;
-
-//    private boolean isPrebookedByClient;
-//
-//    private boolean isConfirmedByHost;
-//
-//    private boolean isRejectedByHost;
-
 
     @Size(min = 0, max = 100, message = "Invalid Comments: Text should be between 0-100 signs")
     private String comments;
-
-//    private Long restaurantModelId;
 
 }

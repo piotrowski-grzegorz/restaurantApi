@@ -23,6 +23,8 @@ public class RatingModel {
     private String surname;
     @Column(name = "MARK")
     private Integer mark;
+//    @Column(name = "AVG_MARK")
+//    private Double avgMark;
     @Column(name = "REVIEW")
     private String review;
 

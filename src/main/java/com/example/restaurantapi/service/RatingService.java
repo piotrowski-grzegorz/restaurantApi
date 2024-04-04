@@ -19,8 +19,8 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public RatingModel addMark(Long resturantId, NewMarkReq req) throws NoRestaurantFoundException {
-        Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(resturantId);
+    public RatingModel addRating(Long restaurantId, NewMarkReq req) throws NoRestaurantFoundException {
+        Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(restaurantId);
         if (optRestaurant.isEmpty()) {
             throw  new NoRestaurantFoundException("No restaurant found with such ID");
         }
@@ -31,6 +31,16 @@ public class RatingService {
         ratingModel.setMark(req.getMark());
         ratingModel.setReview(req.getReview());
         ratingModel.setRestaurant(optRestaurant.get());
+
+        optRestaurant.get().getRating().add(ratingModel);
+
+        double average = optRestaurant.get().getRating().stream()
+                .mapToInt(RatingModel::getMark)
+                .average()
+                .orElse(0.0);
+        optRestaurant.get().setAverageMark(average);
+
+
         return ratingRepository.save(ratingModel);
     }
 

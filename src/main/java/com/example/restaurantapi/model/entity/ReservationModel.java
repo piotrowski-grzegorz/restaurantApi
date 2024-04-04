@@ -32,7 +32,6 @@ public class ReservationModel {
     private String guestPhoneNumber;
 
     @Column(name = "RESERVATION_DATE")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date;
 
     @Column(name = "CONFIRMED_BY_HOST")

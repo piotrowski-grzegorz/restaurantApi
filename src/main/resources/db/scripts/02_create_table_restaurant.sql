@@ -1,10 +1,10 @@
 CREATE TABLE if not exists RESTAURANT
 (
     id BIGINT auto_increment primary key ,
-    name VARCHAR(128) NOT NULL,
-    type VARCHAR(128) NOT NULL,
-    OPEN_HOUR VARCHAR(6) not null,
-    close_hour VARCHAR(6) NOT NULL ,
+    name VARCHAR(128),
+    type VARCHAR(128),
+    OPEN_HOUR VARCHAR(6),
+    close_hour VARCHAR(6),
     AVG_MARK BIGINT,
     ADDRESS_ID BIGINT,
     TABLES_ID BIGINT

@@ -4,10 +4,7 @@ import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -15,6 +12,8 @@ import java.util.Set;
 @Table(name = "ADDRESS")
 //@Embeddable
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddressModel {
     public AddressModel(String streetName, String buildingNumber, String apartmentNumber, String postalCode, String city, String country) {
         this.streetName = streetName;
@@ -47,8 +46,5 @@ public class AddressModel {
     @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "ID")
     @JsonBackReference
     private RestaurantModel restaurantModel;
-
-
-
 
 }

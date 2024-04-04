@@ -1,4 +1,4 @@
-package com.example.restaurantapi.service;
+package com.example.restaurantapi;
 
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.example.restaurantapi.repository.RestaurantRepository;

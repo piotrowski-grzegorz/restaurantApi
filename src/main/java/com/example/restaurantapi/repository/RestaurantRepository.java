@@ -39,9 +39,21 @@ public interface RestaurantRepository extends JpaRepository<RestaurantModel, Lon
      */
     List<RestaurantModel> findAllByRating_Mark(Integer mark);
 
+    /**
+     * Finds all restaurant with addresses
+     *
+     * @return List containing generic type of found restaurant or empty list with no restaurant found
+     */
     @Query(value = "select r from RestaurantModel r join fetch r.address")
     List<RestaurantModel> findAll();
 
+    /**
+     * Finds all restaurants with marks between min and max
+     *
+     * @param min The minimum value of mark from 1 to 5
+     * @param max the maximum value of mark from 1 to 5
+     * @return List containing generic type of found restaurant or empty list with no restaurants found
+     */
     @Query("select e from RestaurantModel e where e.averageMark between :min and :max")
     List<RestaurantModel> findAllByAverageMarkBetween(@Param("min") Integer min, @Param("max") Integer max);
 

@@ -105,6 +105,11 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
     }
 
     @Override
+    public List<RestaurantModel> findAllByAverageMarkBetween(Integer min, Integer max) {
+        return null;
+    }
+
+    @Override
     public List<RestaurantModel> findAllById(Iterable<Long> longs) {
         return null;
     }

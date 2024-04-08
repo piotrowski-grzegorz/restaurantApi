@@ -20,6 +20,15 @@ public class TableController {
 
     private final TableService tableService;
 
+    /**
+     * Creates new TableModel object with the provided details
+     *
+     * @param id The unique identifier of restaurant where table are created
+     * @param request The table details as dto
+     * @param status Set status of table visibility for guest
+     * @return The created table with HTTP status 201
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     */
     @PostMapping("/create/{id}")
     public ResponseEntity<TableModel> createTable(@PathVariable Long id,
                                                   @Valid @RequestBody NewTableReq request,
@@ -28,6 +37,13 @@ public class TableController {
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 
+    /**
+     * Deletes TableModel object by its unique identifier
+     *
+     * @param id The unique identifier ot table
+     * @return HTTP status 202 with accepted if the deletion was successful
+     * @throws NoTableFoundException If no table is found with the provided id
+     */
     @DeleteMapping("/deleteById/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) throws NoTableFoundException {
         tableService.deleteTableById(id);

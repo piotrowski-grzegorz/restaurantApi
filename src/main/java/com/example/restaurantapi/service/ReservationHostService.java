@@ -29,7 +29,14 @@ public class ReservationHostService {
     private final TableRepository tableRepository;
 
 
-
+    /**
+     * Retrieves all reservation by unique identifier of restaurant
+     *
+     * @param id The unique identifier of restaurant
+     * @return List of reservations found
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     * @throws NoReservationFoundException If no reservation is found with the provided id
+     */
     public List<ReservationModel> getAllReservationsByRestaurantId(Long id) throws NoRestaurantFoundException, NoReservationFoundException {
         List<ReservationModel> list = reservationHostRepository.findAllByRestaurantModelId(id);
         restaurantRepository.findById(id)
@@ -40,6 +47,14 @@ public class ReservationHostService {
         return reservationHostRepository.findAllByRestaurantModelId(id);
     }
 
+    /**
+     * Updates confirmation status of reservation to true or false
+     *
+     * @param req Status of reservation provided by dto
+     * @param status Boolean type to update
+     * @throws NoReservationFoundException If no reservation is found with the provided id
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     */
     @Transactional
     public void confirmReservation(ReservationStatusReq req, boolean status) throws NoReservationFoundException, NoRestaurantFoundException {
 
@@ -54,6 +69,14 @@ public class ReservationHostService {
         reservationById.get().setConfirmedByHost(status);
     }
 
+    /**
+     * Updates rejection status of reservation to true or false
+     *
+     * @param req Status of reservation provided by dto
+     * @param status Boolean type to update
+     * @throws NoReservationFoundException If no reservation is found with the provided id
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     */
     @Transactional
     public void rejectReservation(ReservationStatusReq req, boolean status) throws NoReservationFoundException, NoRestaurantFoundException {
 
@@ -70,6 +93,14 @@ public class ReservationHostService {
         reservationById.get().setRejectedByHost(status);
     }
 
+    /**
+     * Updates visibility of table for guest
+     *
+     * @param req Details provided by dto to update
+     * @param status Boolean type to update
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     * @throws NoTableFoundException If no table is found with the provided id
+     */
     @Transactional
     public void updateTableVisibilityForClientByRestaurantId(TableStatusReq req, boolean status) throws NoRestaurantFoundException, NoTableFoundException {
         boolean isRestaurantEmpty = restaurantRepository.findById(req.getIdentifierRestaurant()).isEmpty();

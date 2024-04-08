@@ -13,7 +13,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.List;
+@OpenAPIDefinition(
 
+        info = @Info(
+                title = "Moja aplikacja",
+                version = "1.0.0"
+        )
+)
 @SpringBootApplication
 public class RestaurantApiApplication {
 

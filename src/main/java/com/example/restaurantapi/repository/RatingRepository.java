@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<RatingModel, Long> {
 
+    /**
+     * Finds all ratings by restaurant ID
+     *
+     * @param id The unique identifier of the restaurant
+     * @return List containing generic type of found restaurant or empty list with no restaurants found
+     */
     List<RatingModel> findAllByRestaurant_Id(Long id);
 
 

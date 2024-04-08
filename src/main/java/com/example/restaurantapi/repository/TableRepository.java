@@ -10,7 +10,20 @@ import java.util.Optional;
 
 
 public interface TableRepository extends JpaRepository<TableModel, Long> {
-    public List<TableModel> findAllByRestaurant_Id(Long id);
+    /**
+     * Finds all tables by restaurants ID
+     *
+     * @param id The unique identifier of the restaurant
+     * @return List containing generic type of found restaurant or empty list with no restaurants found
+     */
+    List<TableModel> findAllByRestaurant_Id(Long id);
+
+    /**
+     * Finds one table record by restaurant ID
+     *
+     * @param id The unique identifier of the restaurant
+     * @return List containing generic type of found restaurant or empty list with no restaurants found
+     */
 
     Optional<TableModel> findTopByRestaurant_Id(Long id);
 

@@ -34,9 +34,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@WebMvcTest(controllers = RestaurantController.class)
-//@WithMockUser(username = "Gordon", password = "pass", roles = "GUEST")
-//@AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class RestaurantControllerTest {
     @Mock

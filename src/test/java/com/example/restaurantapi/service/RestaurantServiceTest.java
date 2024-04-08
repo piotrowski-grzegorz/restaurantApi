@@ -25,8 +25,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-//@Sql(scripts = "data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class RestaurantServiceTest {
     @Mock
     private RestaurantRepository restaurantRepository;

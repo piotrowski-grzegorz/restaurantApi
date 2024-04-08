@@ -20,6 +20,15 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final RestaurantRepository restaurantRepository;
 
+    /**
+     * Creates new RatingModel object with provided details
+     *
+     * @param restaurantId the unique identifier of the restaurant to rate
+     * @param req The rating details as dto
+     * @return A new RatingModel object with provided details
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     */
+
     public RatingModel addRating(Long restaurantId, NewMarkReq req) throws NoRestaurantFoundException {
         Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(restaurantId);
         if (optRestaurant.isEmpty()) {
@@ -38,9 +47,28 @@ public class RatingService {
         return ratingRepository.save(ratingModel);
     }
 
-    public List<RatingModel> findAllRatingByRestaurantId(Long id) {
+    /**
+     * Retrieves all ratings by restaurants unique identifier
+     *
+     * @param id the unique identifier of the restaurant
+     * @return List of ratings for unique restaurant
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     */
+
+    public List<RatingModel> findAllRatingByRestaurantId(Long id) throws NoRestaurantFoundException {
+        Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(id);
+        if (optRestaurant.isEmpty()) {
+            throw new NoRestaurantFoundException("No restaurant found with such ID");
+        }
+
         return ratingRepository.findAllByRestaurant_Id(id);
     }
+
+    /**
+     * Calculate average Mark of the restaurant based on all received marks
+     *
+     * @param optRestaurant Optional of RestaurantModel object
+     */
 
     private void calculateAverageMark(Optional<RestaurantModel> optRestaurant) {
         double average = optRestaurant.get().getRating().stream()

@@ -61,30 +61,24 @@ public class RestaurantService {
     }
 
     /**
+     * Retrieves restaurantModel object by its name
      *
-     * Retrives a restaurant by its unique identifier
-     *
-     * @param restaurantName
-     * @return
-     * @throws NoRestaurantFoundException
+     * @param restaurantName Name of the restaurant
+     * @return RestaurantModel object
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
      */
     public RestaurantModel findByName(String restaurantName) throws NoRestaurantFoundException {
         Optional<RestaurantModel> optRestaurant = Optional.ofNullable(restaurantRepository.findByNameIsIgnoreCase(restaurantName)
                 .orElseThrow(() -> new NoRestaurantFoundException("Invalid Restaurant_name: Can't find restaurant's data because there is no restaurant with such a name")));
-
-//        if(optRestaurant.isPresent()) {
-//
-//        }
-//        throw new NoRestaurantFoundException("Can't find restaurant's data because there is no restaurant with such an ID");
         return optRestaurant.get();
     }
 
     /**
      *
-     * Retrives a restaurant by its unique identifier
+     * Retrieves a restaurant by its unique identifier
      *
-     * @param id
-     * @return
+     * @param id the unique identifier of restaurant to find
+     * @return Optional of RestaurantModel object
      * @throws NoRestaurantFoundException If no restaurant is found with the provided id
      */
 
@@ -100,8 +94,7 @@ public class RestaurantService {
      *
      * Deletes a restaurant by its unique identifier
      *
-     * @param id The unique
-     *
+     * @param id The unique identifier of restaurant to delete
      * @throws NoRestaurantFoundException if no restaurant is found with the provided id
      */
     public void deleteRestaurantById(Long id) throws NoRestaurantFoundException {
@@ -112,12 +105,6 @@ public class RestaurantService {
         } restaurantRepository.deleteById(id);
     }
 
-    public List<RestaurantReqDto> findAverageMarkBetween(Integer min, Integer max) {
-        List<RestaurantModel> restaurants = restaurantRepository.findAllByAverageMarkBetween(min, max);
 
-        return restaurants.stream()
-                .map(ent -> restaurantMapper.toRestaurantReqDto(ent))
-                .collect(Collectors.toList());
-    }
 
 }

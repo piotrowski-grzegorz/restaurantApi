@@ -52,7 +52,7 @@ public class RestaurantController {
     }
 
     /**
-     * Retrives a restaurant by it's name
+     * Retrieves a restaurant by it's name
      *
      * @param name the name of the restaurant to retrieve
      * @return the request restaurant if found, with HTTP status 200
@@ -65,7 +65,7 @@ public class RestaurantController {
     }
 
     /**
-     * Retrives a restaurant by its id
+     * Retrieves a restaurant by its id
      *
      * @param id The id of the restaurant to retrieve
      * @return the request restaurant if found, with HTTP status 200
@@ -91,24 +91,27 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
+    /**
+     * Retrieves all restaurants with addresses
+     *
+     * @return the request restaurant if found, with HTTP status 200
+     * @throws NoRestaurantFoundException If no restaurant is found with the provided id
+     */
     @GetMapping("/all")
-    public ResponseEntity<List<RestaurantModel>> findAll() {
+    public ResponseEntity<List<RestaurantModel>> findAll() throws NoRestaurantFoundException {
         List<RestaurantModel> restaurants = restaurantRepository.findAll();
+        if(restaurants.isEmpty()) {
+            throw new NoRestaurantFoundException("No restaurant found");
+        }
 
         System.out.println("###############################");
 
         restaurants.stream()
-                .map(author -> author.getAddress())
-                .forEach(tables -> System.out.println(tables));
+                .map(rest -> rest.getAddress())
+                .forEach(addresses -> System.out.println(addresses));
 
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/marks")
-    public ResponseEntity<List<RestaurantReqDto>> getEmployeesBySalary(@RequestParam Integer min, @RequestParam Integer max) {
-        List<RestaurantReqDto> salaryBetween = restaurantService.findAverageMarkBetween(min, max);
-
-        return ResponseEntity.ok(salaryBetween);
-    }
 
 }

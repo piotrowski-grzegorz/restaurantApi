@@ -36,7 +36,6 @@ public class ReservationClientService {
         }
         return restaurant;
 
-
     }
 
 
@@ -50,12 +49,7 @@ public class ReservationClientService {
 
     }
 
-    /*
-    MUSZĘ WPROWADZIĆ NAJPIERW ŚREDNIĄ W TABELI RESTAURANT - > ŚREDNIA = AVG_MARK
-    POTEM MUSZĘ WYWOŁAĆ W METODZIE GETALL AVGMARK BETWEEN 4,00 A 4,99
-     */
     public List<RestaurantModel> findAllRestaurantsByMark(Integer mark) {
-        RestaurantModel restaurantModel = new RestaurantModel();
         return restaurantRepository.findAllByRating_Mark(mark);
 
     }
@@ -64,7 +58,7 @@ public class ReservationClientService {
 
         List<TableModel> tablesVisibleForHost = tableRepository.findAllByRestaurant_Id(id);
         List<TableModel> tablesVisibleForClient = isVisibleForClient(tablesVisibleForHost);
-        if(tablesVisibleForClient.isEmpty()) {
+        if (tablesVisibleForClient.isEmpty()) {
             throw new NoTableFoundException("No tables available.");
         }
         return tablesVisibleForClient;
@@ -75,8 +69,10 @@ public class ReservationClientService {
         return list;
     }
 
-    public void makeReservation(Long id, ReservationReq req){
-        Optional<RestaurantModel> restaurant = restaurantRepository.findById(id);
+    public void makeReservation(Long id, ReservationReq req) throws NoRestaurantFoundException {
+        Optional<RestaurantModel> restaurant = Optional.ofNullable(restaurantRepository.findById(id).orElseThrow(
+                () -> new NoRestaurantFoundException
+                        ("Invalid RestaurantId: Can't find restaurant with such an ID")));
         ReservationModel newReservation = new ReservationModel();
         newReservation.setGuestName(req.getGuestName());
         newReservation.setGuestSurname(req.getGuestSurname());
@@ -87,28 +83,15 @@ public class ReservationClientService {
         reservationClientRepository.save(newReservation);
     }
 
-    public void cancelReservation(Long id) throws NoRestaurantFoundException, NoReservationFoundException {
+    public void cancelReservation(Long id) throws NoReservationFoundException {
         Optional<ReservationModel> reservation = Optional
                 .ofNullable(reservationClientRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new NoReservationFoundException
-                                ("Invalid Reservation_ID: Can't find reservation with such an ID")
-                ));
+                        .findById(id)
+                        .orElseThrow(
+                                () -> new NoReservationFoundException
+                                        ("Invalid Reservation_ID: Can't find reservation with such an ID")
+                        ));
         reservationClientRepository.deleteById(id);
-
-    }
-
-    private Double calculateAverageMark(Long restaurantId) throws NoRestaurantFoundException {
-        List<RatingModel> ratings = ratingRepository.findAllByRestaurant_Id(restaurantId);
-        if(ratings.isEmpty()) {
-            return null;
-        }
-
-        return ratings.stream()
-                .mapToInt(RatingModel::getMark)
-                .average()
-                .orElse(Double.NaN);
 
     }
 }

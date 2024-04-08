@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class RatingService {
 
     private final RatingRepository ratingRepository;
@@ -22,7 +23,7 @@ public class RatingService {
     public RatingModel addRating(Long restaurantId, NewMarkReq req) throws NoRestaurantFoundException {
         Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(restaurantId);
         if (optRestaurant.isEmpty()) {
-            throw  new NoRestaurantFoundException("No restaurant found with such ID");
+            throw new NoRestaurantFoundException("No restaurant found with such ID");
         }
 
         RatingModel ratingModel = new RatingModel();
@@ -33,18 +34,20 @@ public class RatingService {
         ratingModel.setRestaurant(optRestaurant.get());
 
         optRestaurant.get().getRating().add(ratingModel);
-
-        double average = optRestaurant.get().getRating().stream()
-                .mapToInt(RatingModel::getMark)
-                .average()
-                .orElse(0.0);
-        optRestaurant.get().setAverageMark(average);
-
-
+        calculateAverageMark(optRestaurant);
         return ratingRepository.save(ratingModel);
     }
 
     public List<RatingModel> findAllRatingByRestaurantId(Long id) {
         return ratingRepository.findAllByRestaurant_Id(id);
     }
+
+    private void calculateAverageMark(Optional<RestaurantModel> optRestaurant) {
+        double average = optRestaurant.get().getRating().stream()
+                .mapToInt(RatingModel::getMark)
+                .average()
+                .orElse(0.0);
+        optRestaurant.get().setAverageMark(average);
+    }
 }
+

@@ -12,15 +12,7 @@ import java.util.Optional;
 public interface TableRepository extends JpaRepository<TableModel, Long> {
     public List<TableModel> findAllByRestaurant_Id(Long id);
 
-    @Modifying
-    @Query("UPDATE TableModel e SET e.isVisibleForClient = :isVisible where e.id = :id")
-    void updateTableVisibilityById(Long id, boolean isVisible);
-
     Optional<TableModel> findTopByRestaurant_Id(Long id);
-
-
-
-
 
 
 }

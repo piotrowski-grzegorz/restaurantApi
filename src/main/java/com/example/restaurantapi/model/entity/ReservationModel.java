@@ -43,7 +43,7 @@ public class ReservationModel {
     @Column(name = "COMMENTS")
     private String comments;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
     @JsonBackReference
     private RestaurantModel restaurantModel;

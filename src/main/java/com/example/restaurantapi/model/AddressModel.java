@@ -10,20 +10,10 @@ import java.util.Set;
 
 @Data
 @Table(name = "ADDRESS")
-//@Embeddable
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressModel {
-    public AddressModel(String streetName, String buildingNumber, String apartmentNumber, String postalCode, String city, String country) {
-        this.streetName = streetName;
-        this.buildingNumber = buildingNumber;
-        this.apartmentNumber = apartmentNumber;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.country = country;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)

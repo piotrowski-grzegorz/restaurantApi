@@ -1,16 +1,20 @@
 package com.example.restaurantapi.controller;
 
 import com.example.restaurantapi.model.dto.ReservationReq;
+import com.example.restaurantapi.model.entity.ReservationModel;
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.example.restaurantapi.model.entity.TableModel;
+import com.example.restaurantapi.repository.ReservationClientRepository;
 import com.example.restaurantapi.service.ReservationClientService;
 import com.example.restaurantapi.utils.exception.NoReservationFoundException;
 import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
 import com.example.restaurantapi.utils.exception.NoTableFoundException;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +26,7 @@ import java.util.Optional;
 public class ReservationClientController {
 
     private final ReservationClientService reservationClientService;
-
-
+    private final ReservationClientRepository reservationClientRepository;
 
     @GetMapping("/findRestaurantByCity")
     public ResponseEntity<List<RestaurantModel>> findAllRestaurantsByCity(@RequestParam String city) throws NoRestaurantFoundException {
@@ -37,7 +40,7 @@ public class ReservationClientController {
         return ResponseEntity.ok(restaurant);
     }
 
-    @GetMapping("/findRestaurantByMarks") // jeżeli za trudne można zostawić na sam koniec
+    @GetMapping("/findRestaurantByMarks")
     public ResponseEntity<List<RestaurantModel>> findByMarks(@RequestParam Integer mark) {
         List<RestaurantModel> restaurant = reservationClientService.findAllRestaurantsByMark(mark);
         return ResponseEntity.ok(restaurant);
@@ -50,11 +53,12 @@ public class ReservationClientController {
     }
 
     @PutMapping("/makeReservation/{id}")
-    public ResponseEntity<ReservationReq> makeReservation(@PathVariable Long id,@Valid @RequestBody ReservationReq reservation)
-    {
+    public ResponseEntity<ReservationReq> makeReservation(@PathVariable Long id, @Valid @RequestBody ReservationReq reservation)
+            throws NoRestaurantFoundException {
         reservationClientService.makeReservation(id, reservation);
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
     }
+
 
     @DeleteMapping("/cancelReservation/{id}")
     public ResponseEntity<Void> cancelReservation(@PathVariable Long id) throws NoRestaurantFoundException, NoReservationFoundException {

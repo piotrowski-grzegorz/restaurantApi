@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 import java.util.Set;
@@ -26,17 +27,12 @@ public class RestaurantModel {
     @Column(name = "CLOSE_HOUR", length = 6, nullable = false)
     private String closeHour;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<RatingModel> rating;
 
     @Column(name = "AVG_MARK")
     private Double averageMark;
-
-//    private PhotoModel photos;
-
-//    @Column(name = "REVIEW_NUMBER")
-//    private Integer reviewNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -48,8 +44,8 @@ public class RestaurantModel {
 
     @OneToMany(mappedBy = "restaurantModel", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
+    @BatchSize(size = 20)
     private List<ReservationModel> reservationModel;
-
 
 
 }

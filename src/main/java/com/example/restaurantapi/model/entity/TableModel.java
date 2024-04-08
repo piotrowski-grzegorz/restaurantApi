@@ -14,26 +14,20 @@ import lombok.Setter;
 @Table(name = "TABLES")
 public class TableModel {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Setter(AccessLevel.NONE)
-   private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private Long id;
 
-   @Column(name = "ARRANGEMENT")
-   private String arrangment;
+    @Column(name = "SEATS_NUMBERS")
+    private Integer seatsNumbers;
 
-   @Column(name = "VISIBLE_FOR_CLIENT")
-   private boolean isVisibleForClient;
+    @Column(name = "VISIBLE_FOR_CLIENT")
+    private boolean isVisibleForClient;
 
-   @ManyToOne
-   @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
-   @JsonBackReference
-   private RestaurantModel restaurant;
-
-
-
-//   @Column(name = "ARRANGMENT_ENUM")
-//   @Enumerated(EnumType.ORDINAL)
-//   private TableArrangment tableArrangment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
+    @JsonBackReference
+    private RestaurantModel restaurant;
 
 }

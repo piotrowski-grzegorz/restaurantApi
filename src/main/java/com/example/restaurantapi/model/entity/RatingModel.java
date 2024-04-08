@@ -6,34 +6,37 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
+
 
 @Entity
 @Data
 @Table(name = "RATING")
+
 public class RatingModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
+
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "SURNAME")
     private String surname;
     @Column(name = "MARK")
+
     private Integer mark;
-//    @Column(name = "AVG_MARK")
-//    private Double avgMark;
+
     @Column(name = "REVIEW")
     private String review;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTAURANT_ID", referencedColumnName = "id")
     @JsonBackReference
     private RestaurantModel restaurant;
-
-
 
 
 }

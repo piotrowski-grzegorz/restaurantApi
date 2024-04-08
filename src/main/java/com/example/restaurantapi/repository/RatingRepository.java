@@ -11,5 +11,4 @@ public interface RatingRepository extends JpaRepository<RatingModel, Long> {
     List<RatingModel> findAllByRestaurant_Id(Long id);
 
 
-
 }

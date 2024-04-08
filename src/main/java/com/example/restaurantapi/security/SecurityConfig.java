@@ -20,7 +20,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+
 public class SecurityConfig {
 
     @Bean
@@ -31,16 +32,12 @@ public class SecurityConfig {
                                 .requestMatchers("rating/**").hasRole("GUEST")
                                 .requestMatchers("reservationClient/**").hasRole("GUEST")
                                 .requestMatchers("reservationHost/**").hasRole("HOST")
-                                .requestMatchers("restaurant/create").hasRole("HOST")
-                                .requestMatchers("restaurant/update/").hasRole("HOST")
-                                .requestMatchers("restaurant/findById/").hasRole("HOST")
-                                .requestMatchers("restaurant/findByName").permitAll()
+                                .requestMatchers("restaurant/**").hasRole("HOST")
+                                .requestMatchers("tables/**").hasRole("HOST")
 
                 )
                 .httpBasic(Customizer.withDefaults());
         return httpSecurity.build();
-
-
     }
 
     @Bean
@@ -64,16 +61,10 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user1, user2);
     }
 
+
     @Bean
     public PasswordEncoder encoder() {
 
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
 }

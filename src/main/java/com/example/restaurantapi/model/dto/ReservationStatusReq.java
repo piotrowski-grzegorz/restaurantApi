@@ -1,8 +1,5 @@
 package com.example.restaurantapi.model.dto;
 
-import com.example.restaurantapi.model.entity.RestaurantModel;
-import jakarta.persistence.Column;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

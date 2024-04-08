@@ -5,17 +5,22 @@ import com.example.restaurantapi.model.dto.RestaurantReqDto;
 import com.example.restaurantapi.model.entity.RestaurantModel;
 import com.example.restaurantapi.repository.RestaurantRepository;
 import com.example.restaurantapi.utils.exception.NoRestaurantFoundException;
+import com.example.restaurantapi.utils.mapper.RestaurantMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final RestaurantMapper restaurantMapper;
 
     /**
      *
@@ -101,11 +106,18 @@ public class RestaurantService {
      */
     public void deleteRestaurantById(Long id) throws NoRestaurantFoundException {
         Optional<RestaurantModel> optRestaurant = restaurantRepository.findById(id);
-        if(optRestaurant.isPresent()) {
-            restaurantRepository.deleteById(id);
-        } else {
-            throw new NoRestaurantFoundException("Can't delete restaurant object because there is no restaurant with such an ID");
-        }
+        if(!restaurantRepository.existsById(id)) {
+            throw new NoRestaurantFoundException("Can't delete restaurant " +
+                    "object because there is no restaurant with such an ID");
+        } restaurantRepository.deleteById(id);
+    }
+
+    public List<RestaurantReqDto> findAverageMarkBetween(Integer min, Integer max) {
+        List<RestaurantModel> restaurants = restaurantRepository.findAllByAverageMarkBetween(min, max);
+
+        return restaurants.stream()
+                .map(ent -> restaurantMapper.toRestaurantReqDto(ent))
+                .collect(Collectors.toList());
     }
 
 }

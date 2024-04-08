@@ -1,10 +1,10 @@
 databaseChangeLog:
 ##  - changeSet:
-##      id: 01_create_table_address
+##      id: 01_create_table_address.sql
 ##      author: postgres
 ##      changes:
 ##        - sqlFile:
-##            path: scripts/01_create_table_address.sql
+##            path: scripts/01_create_table_address.sql.sql
 ##            relativeToChangelogFile: true
 ##            splitStatements: true
 ##            stripComments: true
@@ -71,16 +71,16 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
-##  - changeSet:
-##      id: 04_insert_into_rating
-##      author: postgres
-##      changes:
-##        - sqlFile:
-##            path: scripts/04_insert_into_rating.sql
-##            relativeToChangelogFile: true
-##            splitStatements: true
-##            stripComments: true
-#
-#
-#
-#
+  - changeSet:
+      id: 04_insert_into_rating
+      author: postgres
+      changes:
+        - sqlFile:
+            path: scripts/04_insert_into_rating.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+
+
+
+

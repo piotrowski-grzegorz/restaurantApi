@@ -32,12 +32,12 @@ public class ReservationHostController {
         return ResponseEntity.ok(allReservations);
     }
 
-@PutMapping("/confirmReservation/")
-public ResponseEntity<Void> confirmReservation(@RequestBody ReservationStatusReq req, @RequestParam boolean status)
-        throws NoReservationFoundException, NoRestaurantFoundException {
-    reservationHostService.confirmReservation(req, status);
-    return ResponseEntity.ok().build();
-}
+    @PutMapping("/confirmReservation/")
+    public ResponseEntity<Void> confirmReservation(@RequestBody ReservationStatusReq req, @RequestParam boolean status)
+            throws NoReservationFoundException, NoRestaurantFoundException {
+        reservationHostService.confirmReservation(req, status);
+        return ResponseEntity.ok().build();
+    }
 
     @PutMapping("/rejectReservation/")
     public ResponseEntity<Void> rejectReservation(@RequestBody ReservationStatusReq req, @RequestParam boolean status) throws NoReservationFoundException, NoRestaurantFoundException {
@@ -50,7 +50,6 @@ public ResponseEntity<Void> confirmReservation(@RequestBody ReservationStatusReq
         reservationHostService.updateTableVisibilityForClientByRestaurantId(req, status);
         return ResponseEntity.ok().build();
     }
-
 
 
 }
